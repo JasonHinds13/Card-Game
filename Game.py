@@ -7,7 +7,6 @@ class Turn(Enum):
 	opponent = 2
 
 class Game:
-
 	def __init__(self, player1, player2):
 		self.gameplay = True
 		self.player = player1
@@ -21,8 +20,9 @@ class Game:
 			self.turn = Turn.player
 
 	def opponentTurn(self):
+		print("Opponent Health: %s" % (self.opponent.health))
+
 		card = self.opponent.pickCard()
-		print("Opponent Drew: %s -- %s" % (card.name, card.description))
 		if card.type == CardType.attack:
 			card.effect = card.effect + self.opponent.powerBoost
 			self.player.applyCard(card)
@@ -30,15 +30,26 @@ class Game:
 			self.opponent.applyCard(card)
 		self.opponent.drawCards()
 
+		print("Opponent Drew: %s -- %s\n" % (card.name, card.description))
+
 	def playerTurn(self):
-		card = self.player.pickCard()
-		print("Player Drew: %s -- %s" %(card.name, card.description))
+		print("Player Health: %s" % (self.player.health))
+
+		for i in range(len(self.player.hand)):
+			ccard = self.player.hand[i]
+			print("[%s] %s -> %s" % (i, ccard.name, ccard.description))
+
+		ch = int(input("WHich card do you choose? "))
+
+		card = self.player.pickCard(ch)
 		if card.type == CardType.attack:
 			card.effect = card.effect + self.player.powerBoost
 			self.opponent.applyCard(card)
 		else:
 			self.player.applyCard(card)
 		self.player.drawCards()
+
+		print("Player Drew: %s -- %s\n" %(card.name, card.description))
 
 	def announceWinner(self):
 		if self.player.health <= 0:

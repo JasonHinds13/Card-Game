@@ -16,7 +16,7 @@ class Participant:
 		rep = 5 - len(self.hand)
 		self.hand = self.hand + [self.deck.getRandomCard() for i in range(rep)]
 
-	def pickCard(self):
+	def pickCard(self, index=None):
 		return
 
 	def applyCard(self, card):
@@ -37,7 +37,10 @@ class Opponent(Participant):
 	def __init__(self, name, health, defence, deck):
 		Participant.__init__(self, name, health, defence, deck)
 
-	def pickCard(self):
-		card = choice(self.hand)
+	def pickCard(self, index=None):
+		if index:
+			card = self.hand[index]
+		else:
+			card = choice(self.hand)
 		self.hand.remove(card)
 		return card
