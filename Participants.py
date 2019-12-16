@@ -10,9 +10,11 @@ class Participant:
 		self.deck = deck
 		self.hand = [deck.getRandomCard() for i in range(5)] # Hand should contain 5 cards
 		self.powerBoost = 0 # attack boost
+		self.cardsApplied = []
 
 	def drawCards(self):
 		# replace as many cards as was used up in the hand if cards remain in the deck
+		# in case we can ever use multiple cards in one turn
 		rep = 5 - len(self.hand)
 		self.hand = self.hand + [self.deck.getRandomCard() for i in range(rep)]
 
@@ -20,6 +22,16 @@ class Participant:
 		return
 
 	def applyCard(self, card):
+		self.cardsApplied.append(card)
+
+		for ccard in self.cardsApplied:
+			if ccard.turns > 0:
+				self.playCard(ccard)
+				ccard.turns = ccard.turns - 1
+			else:
+				self.undoCardEffect(ccard)
+
+	def playCard(self, card):
 		if card.type == CardType.attack:
 			self.health = self.health - card.effect
 		elif card.type == CardType.defence:
@@ -28,6 +40,13 @@ class Participant:
 			self.powerBoost = card.effect
 		elif card.type == CardType.heal:
 			self.health = self.health + card.effect
+
+	def undoCardEffect(self, card):
+		if card.type == CardType.assist:
+			self.powerBoost = 0
+		elif card.type == CardType.defence:
+			pass
+		self.cardsApplied.remove(card)
 
 class Player(Participant):
 	def __init__(self, name, health, defence, deck):

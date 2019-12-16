@@ -2,13 +2,13 @@ from CardType import CardType
 from Cards import *
 from random import choice
 
-attackCards = [ AttackCard("Fire Strike", 10, 1, "Hits enemy with fire for one turn."),
-	AttackCard("Ice Strike", 10, 1, "Hits enemy with Ice Shards for one turn."),
-	AttackCard("Wind Scythe", 15, 1, "Cuts enemy for one turn."),
-	AttackCard("Burning Ash", 20, 1, "Cloud of ash burns enemy for one turn."),
-	AttackCard("Fire Strike", 17, 1, "Hits enemy with fire for one turn."),
-	AttackCard("Dance of the Fire God", 30, 1, "Demon Slayer Strike for one turn."),
-	AttackCard("Flare", 10, 1, "Fire flares at enemy for one turn.")
+attackCards = [ AttackCard("Fire Strike 1", 10, 1, "Hits enemy with 10 fire for one turn."),
+	AttackCard("Ice Strike", 10, 1, "Hits enemy with 10 Ice Shards for one turn."),
+	AttackCard("Wind Scythe", 15, 1, "Cuts enemy with 15 for one turn."),
+	AttackCard("Burning Ash", 20, 1, "Cloud of ash burns enemy with 20 for one turn."),
+	AttackCard("Fire Strike 2", 17, 1, "Hits enemy with 17 fire for one turn."),
+	AttackCard("Dance of the Fire God", 30, 1, "Demon Slayer Strike 30 for one turn."),
+	AttackCard("Flare", 10, 1, "Fire 10 flares at enemy for one turn.")
 ]
 
 defenceCards = [ DefenceCard("Useless", 0, 1, "Does Nothing right now."),
