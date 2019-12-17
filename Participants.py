@@ -22,13 +22,20 @@ class Participant:
 		return
 
 	def applyCard(self, card):
-		self.cardsApplied.append(card)
+		if card.turns == 1:
+			self.playCard(card)
+		else:
+			self.cardsApplied.append(card)
+			cardsToRemove = []
 
-		for ccard in self.cardsApplied:
-			if ccard.turns > 0:
-				self.playCard(ccard)
-				ccard.turns = ccard.turns - 1
-			else:
+			for ccard in self.cardsApplied:
+				if ccard.turns > 1:
+					self.playCard(ccard)
+					ccard.turns = ccard.turns - 1
+				else:
+					cardsToRemove.append(ccard)
+
+			for ccard in cardsToRemove:
 				self.undoCardEffect(ccard)
 
 	def playCard(self, card):
