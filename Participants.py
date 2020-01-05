@@ -22,31 +22,33 @@ class Participant:
 		return
 
 	def applyCard(self, card):
-		if card.turns == 1:
+		cardsToRemove = []
+		if card.turns == 1 and card.type == CardType.attack:
 			self.playCard(card)
 		else:
 			self.cardsApplied.append(card)
-			cardsToRemove = []
 
-			for ccard in self.cardsApplied:
-				if ccard.turns > 1:
-					self.playCard(ccard)
-					ccard.turns = ccard.turns - 1
-				else:
-					cardsToRemove.append(ccard)
+		for ccard in self.cardsApplied:
+			if ccard.turns > 0:
+				self.playCard(ccard)
+				ccard.turns = ccard.turns - 1
+			else:
+				cardsToRemove.append(ccard)
 
-			for ccard in cardsToRemove:
-				self.undoCardEffect(ccard)
+		for ccard in cardsToRemove:
+			self.undoCardEffect(ccard)
 
 	def playCard(self, card):
 		if card.type == CardType.attack:
 			self.health = self.health - card.effect
+			print "DAMAGE: %s" % card.effect
 		elif card.type == CardType.defence:
 			pass
 		elif card.type == CardType.assist:
 			self.powerBoost = card.effect
 		elif card.type == CardType.heal:
 			self.health = self.health + card.effect
+			print "HEAL: %s" % card.effect
 
 	def undoCardEffect(self, card):
 		if card.type == CardType.assist:
